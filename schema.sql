@@ -22,7 +22,7 @@ CREATE TABLE location(
 
 );
 
-CREATE TABLE menuItem(
+CREATE TABLE menu_items(
   menuItem_id SERIAL PRIMARY KEY,
   picture TEXT,
   course TEXT,
