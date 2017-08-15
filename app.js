@@ -37,10 +37,22 @@ app.get('/api/restaurants/:franchise_id/locations', function (request, response)
   });
 });
 
-app.get('/api/restaurants/:franchise_id/menu_item', function (request, response){
+app.get('/api/restaurants/:franchise_id/menu_items', function (request, response){
   client.query('SELECT * FROM menu WHERE menuItem_id=$1',
   [request.params.menuItem_id], function (error, dbResponse){
-    response.json({ menu: dbResponse.rows })
+    response.json({ status: 'ok', payload: {
+      menu_items: dbResponse.rows } })
+  });
+});
+
+
+
+app.post('/api/restaurants/:franchise_id/menu_items', function (request,
+response) {
+  client.query('INSERT INTO menu_item (name, course, price, picture, franchise_id) VALUES($1, $2, $3, $4, $5)', [request.body.name,
+  request.body.course, request.body.price, request.body.picture, request.params.franchise_id]), function (error, dbResponse) {
+    console.log(dbResponse);
+    response.json({ status: 'ok', payload: {menu_item: dbResponse.rows[0]}})
   });
 });
 
